@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Além do Horizonte | IFG</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Roboto+Mono:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">ALÉM DO <span>HORIZONTE</span></div>
+        <ul class="nav-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#sobre">O Projeto</a></li>
+            <li><a href="#tutorial">Tutorial</a></li>
+            <li><a href="#dados">Inventário</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </nav>
+
+    <header id="inicio" class="hero-section">
+        <div class="retro-sun"></div>
+        <div class="retro-grid"></div>
+        
+        <div class="hero-content synthwave-logo">
+            <h2 class="pre-title">PROJETO</h2>
+            <h1 class="main-title">ALÉM DO HORIZONTE</h1>
+            <p class="subtitle">Recuperando Tecnologia, Expandindo o Conhecimento</p>
+        </div>
+    </header>
+
+    <section id="sobre" class="container section-padding">
+        <h2 class="section-title">O Projeto</h2>
+        <div class="content-box">
+            <p>Desenvolvido no <strong>Instituto Federal de Goiás (IFG) - Campus Goiânia</strong>, o projeto <strong>Além do Horizonte</strong> surge com o propósito de investigar e mitigar o descarte precoce de dispositivos tecnológicos subutilizados, com destaque para as TV Boxes.</p>
+            <p>O projeto visa a recaracterização completa desses equipamentos, substituindo seus sistemas restritos por sistemas operacionais de código aberto baseados em Linux, como o Armbian. Com o foco focado na sustentabilidade eletrônica (redução de e-waste) e na criação de soluções de baixo custo, a iniciativa transforma hardwares até então limitados em poderosas ferramentas de pesquisa e laboratório.</p>
+            <p>Durante a execução e uso prático, nossa equipe e a comunidade estão aprendendo a configurar sistemas embarcados, estruturar redes locais, operar minisservidores e implementar serviços de infraestrutura (como bloqueadores de anúncios e servidores de arquivos), agregando valor prático e real ao cotidiano acadêmico e tecnológico.</p>
+        </div>
+    </section>
+
+    <section id="tutorial" class="container section-padding">
+        <h2 class="section-title">Tutorial de Montagem</h2>
+        
+        <div class="tutorial-layout">
+            <aside class="sidebar-index">
+                <h3>Sumário</h3>
+                <ul>
+                    <li><a href="#passo1">1. Instalação da Imagem</a></li>
+                    <li><a href="#passo1-1">1.1. Configuração de Arquivos</a></li>
+                    <li><a href="#passo2">2. Instalação Física</a></li>
+                    <li><a href="#passo3">3. Pós-instalação EMMC</a></li>
+                </ul>
+            </aside>
+
+            <article class="tutorial-content">
+                <section id="passo1" class="tutorial-step">
+                    <h3>1. Instalação da Imagem</h3>
+                    <ul>
+                        <li>Formatar o pendrive (caso não use o Balena-Etcher diretamente).</li>
+                        <li>Instalar o <strong>Balena-Etcher</strong>.</li>
+                        <li>Baixar a imagem do sistema operacional.</li>
+                        <li>Baixar o arquivo <strong>DTB</strong> correspondente.</li>
+                        <li>Baixar os arquivos auxiliares: <code>aml_autoscript</code>, <code>s905_autoscript</code>.</li>
+                    </ul>
+                    <div class="info-box alert">
+                        <p><strong>Atenção:</strong> Para cada tipo de processador haverá um tipo específico de imagem ARMBIAN. Atente-se, pois modelos de TV Box com o mesmo nome comercial não necessariamente possuem o mesmo processador físico em suas placas!</p>
+                    </div>
+                    <ol>
+                        <li>Abra o Balena-Etcher e selecione a imagem ARMBIAN baixada.</li>
+                        <li>Selecione a unidade de armazenamento desejada (seu pendrive).</li>
+                        <li>Inicie o processo de gravação (Flash!). Utilizando o Balena-Etcher, a formatação prévia do pendrive ocorre automaticamente.</li>
+                    </ol>
+                </section>
+
+                <section id="passo1-1" class="tutorial-step">
+                    <h3>1.1. Configuração de Arquivos</h3>
+                    <ol>
+                        <li>Acesse a partição bootável do pendrive e navegue até a pasta <code>armbi_boot/dtb/amlogic</code>.</li>
+                        <li>Substitua o arquivo DTB existente pelo arquivo que você baixou.</li>
+                        <li>Volte para a raiz da partição (<code>arm_boot</code>) e cole os arquivos <code>aml_autoscript</code> e <code>s905_autoscript</code>.</li>
+                        <li>Insira também o arquivo de ambiente <code>armbianEnv.txt</code> na mesma raiz.</li>
+                        <li>Descubra o UUID do pendrive abrindo o terminal Linux no seu computador e executando:</li>
+                    </ol>
+                    <div class="terminal"><code>sudo blkid</code></div>
+                    <p>Verifique a linha que contém <code>LABEL="armbi_root"</code>, copie o código UUID correspondente e substitua o valor existente dentro do arquivo <code>armbianEnv.txt</code>.</p>
+                    <p>Remova o pendrive com segurança do seu computador.</p>
+                </section>
+
+                <section id="passo2" class="tutorial-step">
+                    <h3>2. Instalação Física</h3>
+                    <p>Conecte o pendrive na porta USB mais rápida da TV Box (normalmente identificada como 3.0 ou pela cor azul) e ligue a fonte de energia.</p>
+                    <div class="info-box">
+                        <p><strong>OBS:</strong> Caso o sistema não inicie pelo pendrive, desconecte a TV Box da energia. Com um palito, pressione simultaneamente os botões internos das entradas <strong>RESET</strong> e <strong>UPDATE</strong> (é necessário escutar o clique interno). Mantenha pressionado, conecte a energia e aguarde cerca de 10 segundos. Solte o botão da entrada RESET, espere a tela piscar e solte a entrada UPDATE.</p>
+                    </div>
+                    <ol>
+                        <li>Na primeira inicialização, o Armbian exigirá a criação do usuário e senha <code>root</code>. Siga os passos na tela e configure o layout do teclado e o fuso horário.</li>
+                        <li>Após o login bem-sucedido no terminal, acesse o diretório principal:</li>
+                    </ol>
+                    <div class="terminal"><code>cd /root</code></div>
+                    <p>Inicie a rotina de instalação do Armbian na memória interna (EMMC) executando:</p>
+                    <div class="terminal"><code>./install</code></div>
+                    <p>Essa instalação particionará a memória da TV Box. Crie diretórios para atuar como pontos de montagem temporários e monte as partições:</p>
+                    <div class="terminal"><code>cd /mnt
+mkdir pendrive
+mkdir tvbox
+mount /dev/sda1 /mnt/pendrive
+mount /dev/mmcblk22p1 /mnt/tvbox</code></div>
+                </section>
+
+                <section id="passo3" class="tutorial-step">
+                    <h3>3. Pós-instalação EMMC</h3>
+                    <p>Para evitar conflitos, navegue até a pasta da TV Box montada e crie um backup do script original renomeando-o:</p>
+                    <div class="terminal"><code>mv /mnt/tvbox/emmc_autoscript /mnt/tvbox/emmc_autoscript.bkp</code></div>
+                    <p>Em seguida, copie/mova o script adaptado do pendrive para a memória interna da TV Box:</p>
+                    <div class="terminal"><code>mv /mnt/pendrive/s905_autoscript /mnt/tvbox/emmc_autoscript</code></div>
+                    <p>Configure o <code>armbianEnv.txt</code> com o UUID da memória interna (EMMC). Para descobrir esse endereço, execute:</p>
+                    <div class="terminal"><code>sudo blkid</code></div>
+                    <p>Procure pelo identificador <code>/dev/mmcblk2p1</code> (geralmente rotulado como "Root_Emmc"). Copie este novo UUID.</p>
+                    <p>Edite o arquivo de inicialização na memória da TV Box:</p>
+                    <div class="terminal"><code>nano /mnt/tvbox/armbianEnv.txt</code></div>
+                    <p>Substitua o valor após <code>rootdev=UUID=</code> pelo novo código copiado. Salve e saia do editor (Ctrl+O, Enter, Ctrl+X).</p>
+                    <p>Por fim, desmonte os diretórios para finalizar as operações de leitura/gravação em segurança:</p>
+                    <div class="terminal"><code>umount /mnt/pendrive
+umount /mnt/tvbox</code></div>
+                    <p>Desligue a TV Box, remova o pendrive e reinicie o aparelho. O Armbian agora carregará diretamente da memória interna.</p>
+                </section>
+            </article>
+        </div>
+    </section>
+
+    <section id="dados" class="container section-padding">
+        <h2 class="section-title">Inventário de Equipamentos</h2>
+        <div class="table-container">
+            <table id="tabela-google">
+                <thead id="cabecalho-tabela"></thead>
+                <tbody id="corpo-tabela">
+                    <tr><td colspan="15" style="text-align: center;">Iniciando leitura de dados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <div class="footer-content">
+            <p><strong>PROJETO ALÉM DO HORIZONTE | IF - CAMPUS GOIÂNIA | 2026</strong></p>
+            <p>Entre em contato conosco: <a href="mailto:alem.do.horizonte.ifg@gmail.com" class="neon-link">alem.do.horizonte.ifg@gmail.com</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
